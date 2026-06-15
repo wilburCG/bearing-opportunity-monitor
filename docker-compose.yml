@@ -1,0 +1,70 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: bearing_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: bearing_root_password
+      MYSQL_DATABASE: bearing_opportunities
+      MYSQL_USER: bearing
+      MYSQL_PASSWORD: bearing_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: bearing_qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+
+  neo4j:
+    image: neo4j:5
+    container_name: bearing_neo4j
+    environment:
+      NEO4J_AUTH: neo4j/bearing_neo4j_password
+      NEO4J_PLUGINS: '["apoc"]'
+    ports:
+      - "7475:7474"
+      - "7688:7687"
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+
+  backend:
+    build: ./backend
+    container_name: bearing_backend
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - mysql
+      - qdrant
+      - neo4j
+    ports:
+      - "8002:8000"
+    volumes:
+      - ./backend/app:/app/app
+
+  frontend:
+    build: ./frontend
+    container_name: bearing_frontend
+    env_file:
+      - ./frontend/.env.local
+    depends_on:
+      - backend
+    ports:
+      - "3002:3000"
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
+      - ./frontend/.env.local:/app/.env.local
+
+volumes:
+  mysql_data:
+  qdrant_data:
+  neo4j_data:
+  neo4j_logs:

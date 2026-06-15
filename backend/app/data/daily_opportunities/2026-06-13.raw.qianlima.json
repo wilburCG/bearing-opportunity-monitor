@@ -1,0 +1,214 @@
+{
+  "queries": 17,
+  "raw_count": 119,
+  "candidate_count": 14,
+  "selected_count": 5,
+  "errors": [
+    {
+      "query": "OpenClaw web_search",
+      "error": "provider 参数/配置不可用，SearXNG 未配置"
+    },
+    {
+      "query": "部分千里马长尾查询",
+      "error": "API 返回非 JSON/WAF，已跳过未验证结果"
+    }
+  ],
+  "selected_items": [
+    {
+      "source_url": "https://www.qianlima.com/zb/detail/20260613_605417210.html",
+      "title": "本钢机制公司(机制）滚子轴承等招标公告",
+      "summary": "千里马招标网于2026年06月13日发布本钢机制公司(机制）滚子轴承等招标公告；项目简介：本钢机制公司(机制）滚子轴承等招标公告.pdf。",
+      "opportunity_type": "采购招标",
+      "industry": "钢铁",
+      "company_name": "本钢机制公司",
+      "project_name": "本钢机制公司(机制）滚子轴承等招标公告",
+      "province": "辽宁",
+      "city": null,
+      "district": null,
+      "address": "辽宁",
+      "bearing_types": [
+        "滚子轴承",
+        "轴承"
+      ],
+      "bearing_models": [],
+      "equipment_types": [
+        "钢铁机械备件",
+        "机制设备"
+      ],
+      "estimated_quantity": null,
+      "estimated_amount": null,
+      "deadline_at": null,
+      "published_at": "2026-06-13 02:00:06",
+      "volume_score": 76,
+      "urgency_score": 72,
+      "confidence_score": 88,
+      "fit_score": 88,
+      "total_score": 81.0,
+      "confidence_reason": "千里马公开搜索 API 命中，详情页可访问且 title/meta description 明确为“滚子轴承等招标公告”。",
+      "recommended_action": "优先跟进：核验招标文件中的具体滚子轴承型号、数量、品牌限制与报名截止时间，适合钢铁/冶金备件渠道快速响应。",
+      "source_title": "本钢机制公司(机制）滚子轴承等招标公告 - 千里马招标网",
+      "source_site": "千里马招标网",
+      "source_type": "招标公告",
+      "content_text": "千里马招标网于2026年06月13日发布本钢机制公司(机制）滚子轴承等招标公告；项目简介：本钢机制公司(机制）滚子轴承等招标公告.pdf",
+      "evidence_snippet": "千里马招标网于2026年06月13日发布本钢机制公司(机制）滚子轴承等招标公告；项目简介：本钢机制公司(机制）滚子轴承等招标公告.pdf",
+      "credibility_level": "high"
+    },
+    {
+      "source_url": "https://www.qianlima.com/zb/detail/20260612_605392752.html",
+      "title": "分谈分签+重庆重齿风电装备制造有限责任公司+轴承密封环的询价书",
+      "summary": "千里马招标网于2026年06月12日发布重庆重齿风电装备制造有限责任公司轴承密封环询价书；报价截止时间 2026-06-16 09:00，允许部分物料报价：否。",
+      "opportunity_type": "采购招标",
+      "industry": "风电",
+      "company_name": "重庆重齿风电装备制造有限责任公司",
+      "project_name": "轴承密封环询价书",
+      "province": "重庆",
+      "city": "重庆",
+      "district": null,
+      "address": "重庆-重庆",
+      "bearing_types": [
+        "轴承密封环",
+        "轴承"
+      ],
+      "bearing_models": [],
+      "equipment_types": [
+        "风电齿轮箱",
+        "风电装备"
+      ],
+      "estimated_quantity": null,
+      "estimated_amount": null,
+      "deadline_at": "2026-06-16 09:00:00",
+      "published_at": "2026-06-12 22:31:09",
+      "volume_score": 74,
+      "urgency_score": 86,
+      "confidence_score": 90,
+      "fit_score": 92,
+      "total_score": 86.0,
+      "confidence_reason": "详情页可访问，meta description 明确采购主体、轴承密封环物料和报价截止时间；风电装备制造场景与目标行业匹配度高。",
+      "recommended_action": "高优先级：在 2026-06-16 09:00 前核验物料规格/图纸及是否可替代，准备风电齿轮箱轴承密封件报价。",
+      "source_title": "分谈分签+重庆重齿风电装备制造有限责任公司+轴承密封环的询价书 - 千里马招标网",
+      "source_site": "千里马招标网",
+      "source_type": "询价公告",
+      "content_text": "千里马招标网于2026年06月12日发布分谈分签+重庆重齿风电装备制造有限责任公司+轴承密封环的询价书；报价截止时间：2026-06-16 09:00；询价书名称：轴承密封环的询价书；允许部分物料报价：否。",
+      "evidence_snippet": "报价截止时间：2026-06-16 09:00；询价书名称：分谈分签+重庆重齿风电装备制造有限责任公司+轴承密封环的询价书；允许部分物料报价：否。",
+      "credibility_level": "high"
+    },
+    {
+      "source_url": "https://www.qianlima.com/zb/detail/20260613_605415864.html",
+      "title": "龙州纸业轴承（V001）采购公告采购公告",
+      "summary": "千里马招标网于2026年06月13日发布龙州纸业轴承（V001）采购公告，项目简介指向轴承采购公告 PDF。",
+      "opportunity_type": "采购招标",
+      "industry": "其他",
+      "company_name": "龙州纸业",
+      "project_name": "龙州纸业轴承（V001）采购公告",
+      "province": "广西",
+      "city": "崇左",
+      "district": null,
+      "address": "广西-崇左",
+      "bearing_types": [
+        "轴承"
+      ],
+      "bearing_models": [
+        "V001"
+      ],
+      "equipment_types": [
+        "纸业生产设备备件"
+      ],
+      "estimated_quantity": null,
+      "estimated_amount": null,
+      "deadline_at": null,
+      "published_at": "2026-06-13 01:40:05",
+      "volume_score": 68,
+      "urgency_score": 72,
+      "confidence_score": 88,
+      "fit_score": 62,
+      "total_score": 73.0,
+      "confidence_reason": "千里马公开检索 API 命中，详情页 title/meta description 明确为龙州纸业轴承采购公告。",
+      "recommended_action": "核验 PDF 中轴承型号、数量和交付地；若为通用备件可快速报价，作为纸业设备维护线索跟进。",
+      "source_title": "龙州纸业轴承（V001）采购公告采购公告 - 千里马招标网",
+      "source_site": "千里马招标网",
+      "source_type": "采购公告",
+      "content_text": "千里马招标网于2026年06月13日发布龙州纸业轴承（V001）采购公告采购公告；项目简介：龙州纸业轴承（V001）采购公告采购公告.pdf",
+      "evidence_snippet": "千里马招标网于2026年06月13日发布龙州纸业轴承（V001）采购公告采购公告；项目简介：龙州纸业轴承（V001）采购公告采购公告.pdf",
+      "credibility_level": "high"
+    },
+    {
+      "source_url": "https://www.qianlima.com/zb/detail/20260612_605390684.html",
+      "title": "分谈分签+云南昆船五舟实业有限公司+片仔癀辅配-轴承的询价书",
+      "summary": "千里马招标网于2026年06月12日发布云南昆船五舟实业有限公司片仔癀辅配-轴承询价书；报价截止时间 2026-06-16 10:00，允许部分物料报价：否。",
+      "opportunity_type": "采购招标",
+      "industry": "其他",
+      "company_name": "云南昆船五舟实业有限公司",
+      "project_name": "片仔癀辅配-轴承询价书",
+      "province": "云南",
+      "city": "昆明",
+      "district": null,
+      "address": "云南-昆明",
+      "bearing_types": [
+        "轴承"
+      ],
+      "bearing_models": [],
+      "equipment_types": [
+        "辅配设备",
+        "自动化/物流设备备件"
+      ],
+      "estimated_quantity": null,
+      "estimated_amount": null,
+      "deadline_at": "2026-06-16 10:00:00",
+      "published_at": "2026-06-12 21:55:37",
+      "volume_score": 68,
+      "urgency_score": 84,
+      "confidence_score": 90,
+      "fit_score": 62,
+      "total_score": 76.0,
+      "confidence_reason": "详情页可访问，meta description 明确轴承询价、采购主体和报价截止时间。",
+      "recommended_action": "在 2026-06-16 10:00 前核验物料编码/规格，判断是否为通用轴承或设备配套轴承，适合快速报价。",
+      "source_title": "分谈分签+云南昆船五舟实业有限公司+片仔癀辅配-轴承的询价书 - 千里马招标网",
+      "source_site": "千里马招标网",
+      "source_type": "询价公告",
+      "content_text": "千里马招标网于2026年06月12日发布分谈分签+云南昆船五舟实业有限公司+片仔癀辅配-轴承的询价书；报价截止时间：2026-06-16 10:00；允许部分物料报价：否。",
+      "evidence_snippet": "报价截止时间：2026-06-16 10:00；询价书名称：分谈分签+云南昆船五舟实业有限公司+片仔癀辅配-轴承的询价书；允许部分物料报价：否。",
+      "credibility_level": "high"
+    },
+    {
+      "source_url": "https://www.qianlima.com/zb/detail/20260612_605392229.html",
+      "title": "4支点轴承座",
+      "summary": "千里马招标网于2026年06月12日发布4支点轴承座公开询比采购，需求量 1 件，规格型号 X567-133，技术标准 C，需求发布时间 2026-06-12 21:38。",
+      "opportunity_type": "采购招标",
+      "industry": "其他",
+      "company_name": "航空相关企业（千里马脱敏）",
+      "project_name": "4支点轴承座公开询比采购",
+      "province": "浙江",
+      "city": "湖州",
+      "district": null,
+      "address": "浙江-湖州",
+      "bearing_types": [
+        "轴承座"
+      ],
+      "bearing_models": [
+        "X567-133"
+      ],
+      "equipment_types": [
+        "航空设备零件",
+        "机械备件"
+      ],
+      "estimated_quantity": "1件",
+      "estimated_amount": null,
+      "deadline_at": null,
+      "published_at": "2026-06-12 22:19:35",
+      "volume_score": 48,
+      "urgency_score": 70,
+      "confidence_score": 86,
+      "fit_score": 58,
+      "total_score": 66.0,
+      "confidence_reason": "详情页可访问，meta description 明确公开询比采购、需求量、规格型号和发布时间；但采购量小，商业价值中低。",
+      "recommended_action": "低成本跟进：若库存/加工能力覆盖 X567-133 轴承座，可核验平台报价窗口并提交快速报价；否则暂缓。",
+      "source_title": "4支点轴承座 - 千里马招标网",
+      "source_site": "千里马招标网",
+      "source_type": "询比采购",
+      "content_text": "千里马招标网于2026年06月12日发布4支点轴承座；项目简介：4支点轴承座 公开询比采购 需求量:1.0件 规格描述:规格型号:X567-133;技术标准:C 发布企业:航空相关企业（千里马脱敏） 询价中 需求发布时间2026-06-12 21:38",
+      "evidence_snippet": "4支点轴承座 公开询比采购 需求量:1.0件 规格描述:规格型号:X567-133;技术标准:C；需求发布时间2026-06-12 21:38",
+      "credibility_level": "high"
+    }
+  ],
+  "verified_source": "千里马公开搜索 API + 详情页 title/meta description 可访问核验"
+}

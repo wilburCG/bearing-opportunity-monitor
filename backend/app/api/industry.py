@@ -47,7 +47,11 @@ def list_companies(
     q: str | None = None,
     industry: str | None = None,
     company_type: str | None = None,
+    province: str | None = None,
+    city: str | None = None,
     status: str | None = None,
+    min_confidence: float | None = None,
+    max_confidence: float | None = None,
     limit: int = 100,
     db: Session = Depends(get_db),
 ):
@@ -59,6 +63,14 @@ def list_companies(
         query = query.filter(Company.industry == industry)
     if company_type:
         query = query.filter(Company.company_type == company_type)
+    if province:
+        query = query.filter(Company.province == province)
+    if city:
+        query = query.filter(Company.city == city)
+    if min_confidence is not None:
+        query = query.filter(Company.confidence_score >= min_confidence)
+    if max_confidence is not None:
+        query = query.filter(Company.confidence_score <= max_confidence)
     if status:
         query = query.filter(Company.status == status)
     else:
@@ -113,7 +125,10 @@ def list_products(
     industry: str | None = None,
     category: str | None = None,
     company_id: int | None = None,
+    manufacturer_name: str | None = None,
     status: str | None = None,
+    min_confidence: float | None = None,
+    max_confidence: float | None = None,
     limit: int = 100,
     db: Session = Depends(get_db),
 ):
@@ -127,6 +142,12 @@ def list_products(
         query = query.filter(Product.category == category)
     if company_id:
         query = query.filter(Product.company_id == company_id)
+    if manufacturer_name:
+        query = query.filter(Product.manufacturer_name == manufacturer_name)
+    if min_confidence is not None:
+        query = query.filter(Product.confidence_score >= min_confidence)
+    if max_confidence is not None:
+        query = query.filter(Product.confidence_score <= max_confidence)
     if status:
         query = query.filter(Product.status == status)
     else:
@@ -179,13 +200,23 @@ def delete_product(product_id: int, db: Session = Depends(get_db)):
 def list_relationships(
     entity_type: str | None = None,
     entity_id: int | None = None,
+    source_type: str | None = None,
+    target_type: str | None = None,
     relation_type: str | None = None,
+    min_confidence: float | None = None,
+    max_confidence: float | None = None,
     limit: int = 200,
     db: Session = Depends(get_db),
 ):
     query = db.query(EntityRelationship)
     if entity_type:
         _validate_entity_type(entity_type)
+    if source_type:
+        _validate_entity_type(source_type)
+        query = query.filter(EntityRelationship.source_type == source_type)
+    if target_type:
+        _validate_entity_type(target_type)
+        query = query.filter(EntityRelationship.target_type == target_type)
     if entity_type and entity_id:
         query = query.filter(
             or_(
@@ -197,6 +228,10 @@ def list_relationships(
         query = query.filter(or_(EntityRelationship.source_type == entity_type, EntityRelationship.target_type == entity_type))
     if relation_type:
         query = query.filter(EntityRelationship.relation_type == relation_type)
+    if min_confidence is not None:
+        query = query.filter(EntityRelationship.confidence_score >= min_confidence)
+    if max_confidence is not None:
+        query = query.filter(EntityRelationship.confidence_score <= max_confidence)
     return query.order_by(EntityRelationship.updated_at.desc()).limit(limit).all()
 
 
@@ -238,11 +273,25 @@ def delete_relationship(relationship_id: int, db: Session = Depends(get_db)):
 def get_graph(
     entity_type: str | None = None,
     entity_id: int | None = None,
+    source_type: str | None = None,
+    target_type: str | None = None,
     relation_type: str | None = None,
+    min_confidence: float | None = None,
+    max_confidence: float | None = None,
     limit: int = 200,
     db: Session = Depends(get_db),
 ):
-    relationships = list_relationships(entity_type=entity_type, entity_id=entity_id, relation_type=relation_type, limit=limit, db=db)
+    relationships = list_relationships(
+        entity_type=entity_type,
+        entity_id=entity_id,
+        source_type=source_type,
+        target_type=target_type,
+        relation_type=relation_type,
+        min_confidence=min_confidence,
+        max_confidence=max_confidence,
+        limit=limit,
+        db=db,
+    )
     node_refs: set[tuple[str, int]] = set()
     for rel in relationships:
         node_refs.add((rel.source_type, rel.source_id))

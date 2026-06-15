@@ -73,7 +73,7 @@ export function chatWithAgent(message: string) {
   });
 }
 
-export function listCompanies(params: { q?: string; industry?: string; company_type?: string; status?: string; limit?: number } = {}) {
+export function listCompanies(params: { q?: string; industry?: string; company_type?: string; province?: string; city?: string; status?: string; min_confidence?: number; max_confidence?: number; limit?: number } = {}) {
   const query = new URLSearchParams();
   Object.entries(params).forEach(([key, value]) => {
     if (value !== undefined && value !== '') query.set(key, String(value));
@@ -88,7 +88,7 @@ export function createCompany(payload: Partial<Company> & { name: string }) {
   });
 }
 
-export function listProducts(params: { q?: string; industry?: string; category?: string; company_id?: number; status?: string; limit?: number } = {}) {
+export function listProducts(params: { q?: string; industry?: string; category?: string; company_id?: number; manufacturer_name?: string; status?: string; min_confidence?: number; max_confidence?: number; limit?: number } = {}) {
   const query = new URLSearchParams();
   Object.entries(params).forEach(([key, value]) => {
     if (value !== undefined && value !== '') query.set(key, String(value));
@@ -103,7 +103,7 @@ export function createProduct(payload: Partial<Product> & { name: string }) {
   });
 }
 
-export function listRelationships(params: { entity_type?: string; entity_id?: number; relation_type?: string; limit?: number } = {}) {
+export function listRelationships(params: { entity_type?: string; entity_id?: number; source_type?: string; target_type?: string; relation_type?: string; min_confidence?: number; max_confidence?: number; limit?: number } = {}) {
   const query = new URLSearchParams();
   Object.entries(params).forEach(([key, value]) => {
     if (value !== undefined && value !== '') query.set(key, String(value));
@@ -118,7 +118,7 @@ export function createRelationship(payload: Omit<EntityRelationship, 'id' | 'cre
   });
 }
 
-export function getIndustryGraph(params: { entity_type?: string; entity_id?: number; relation_type?: string; limit?: number } = {}) {
+export function getIndustryGraph(params: { entity_type?: string; entity_id?: number; source_type?: string; target_type?: string; relation_type?: string; min_confidence?: number; max_confidence?: number; limit?: number } = {}) {
   const query = new URLSearchParams();
   Object.entries(params).forEach(([key, value]) => {
     if (value !== undefined && value !== '') query.set(key, String(value));

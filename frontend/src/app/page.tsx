@@ -150,6 +150,18 @@ const urgencyPresets = [
   { value: '0-59.99', label: 'Urgency: Later < 60' },
 ];
 
+
+function uniqueOptions(values: Array<string | null | undefined>, labeler?: (value: string) => string) {
+  return Array.from(new Set(values.map((value) => value?.trim()).filter((value): value is string => !!value)))
+    .sort((a, b) => a.localeCompare(b, 'zh-CN'))
+    .map((value) => ({ value, label: labeler ? labeler(value) : value }));
+}
+
+function mergeOptions<T extends { value: string; label: string }>(dynamicOptions: T[], selected?: string) {
+  if (!selected || dynamicOptions.some((option) => option.value === selected)) return dynamicOptions;
+  return [{ value: selected, label: selected }, ...dynamicOptions];
+}
+
 function parseRange(value?: string) {
   if (!value) return [undefined, undefined] as const;
   const [min, max] = value.split('-').map(Number);
@@ -352,13 +364,81 @@ export default function HomePage() {
     { title: 'Confidence', dataIndex: 'confidence_score', width: 120 },
   ];
 
+  const opportunityIndustryOptions = useMemo(
+    () => mergeOptions(uniqueOptions(data.map((item) => item.industry), industryLabel), opportunityFilters.industry),
+    [data, opportunityFilters.industry],
+  );
+  const opportunityTypeOptions = useMemo(
+    () => mergeOptions(uniqueOptions(data.map((item) => item.opportunity_type), opportunityTypeLabel), opportunityFilters.opportunityType),
+    [data, opportunityFilters.opportunityType],
+  );
+  const opportunityStatusOptions = useMemo(
+    () => mergeOptions(uniqueOptions(data.map((item) => item.status), statusLabel), opportunityFilters.status),
+    [data, opportunityFilters.status],
+  );
+  const companyIndustryOptions = useMemo(
+    () => mergeOptions(uniqueOptions(companies.map((item) => item.industry), industryLabel), companyFilters.industry),
+    [companies, companyFilters.industry],
+  );
+  const companyTypeOptions = useMemo(
+    () => mergeOptions(uniqueOptions(companies.map((item) => item.company_type)), companyFilters.companyType),
+    [companies, companyFilters.companyType],
+  );
+  const companyProvinceOptions = useMemo(
+    () => mergeOptions(uniqueOptions(companies.map((item) => item.province)), companyFilters.province),
+    [companies, companyFilters.province],
+  );
+  const companyCityOptions = useMemo(
+    () => mergeOptions(uniqueOptions(companies.map((item) => item.city)), companyFilters.city),
+    [companies, companyFilters.city],
+  );
+  const companyStatusOptions = useMemo(
+    () => mergeOptions(uniqueOptions(companies.map((item) => item.status)), companyFilters.status),
+    [companies, companyFilters.status],
+  );
+  const productIndustryOptions = useMemo(
+    () => mergeOptions(uniqueOptions(products.map((item) => item.industry), industryLabel), productFilters.industry),
+    [products, productFilters.industry],
+  );
+  const productCategoryOptions = useMemo(
+    () => mergeOptions(uniqueOptions(products.map((item) => item.category)), productFilters.category),
+    [products, productFilters.category],
+  );
+  const productManufacturerOptions = useMemo(
+    () => mergeOptions(uniqueOptions(products.map((item) => item.manufacturer_name)), productFilters.manufacturerName),
+    [products, productFilters.manufacturerName],
+  );
+  const productStatusOptions = useMemo(
+    () => mergeOptions(uniqueOptions(products.map((item) => item.status)), productFilters.status),
+    [products, productFilters.status],
+  );
+  const relationshipEntityTypeOptions = useMemo(
+    () => uniqueOptions([
+      ...relationships.map((item) => item.source_type),
+      ...relationships.map((item) => item.target_type),
+    ]),
+    [relationships],
+  );
+  const relationshipSourceTypeOptions = useMemo(
+    () => mergeOptions(uniqueOptions(relationships.map((item) => item.source_type)), relationshipFilters.sourceType),
+    [relationships, relationshipFilters.sourceType],
+  );
+  const relationshipTargetTypeOptions = useMemo(
+    () => mergeOptions(uniqueOptions(relationships.map((item) => item.target_type)), relationshipFilters.targetType),
+    [relationships, relationshipFilters.targetType],
+  );
+  const relationshipTypeOptions = useMemo(
+    () => mergeOptions(uniqueOptions(relationships.map((item) => item.relation_type)), relationshipFilters.relationType),
+    [relationships, relationshipFilters.relationType],
+  );
+
   const opportunityFilterPanel = (
     <Space wrap align="end" size={[12, 12]}>
       <FilterField label="Industry">
-        <Select allowClear placeholder="Select industry" style={{ width: 150 }} options={industries} value={opportunityFilters.industry} onChange={(value) => updateOpportunityFilter('industry', value)} />
+        <Select allowClear placeholder="Select industry" style={{ width: 150 }} options={opportunityIndustryOptions} value={opportunityFilters.industry} onChange={(value) => updateOpportunityFilter('industry', value)} />
       </FilterField>
       <FilterField label="Opportunity Type">
-        <Select allowClear placeholder="Select type" style={{ width: 170 }} options={opportunityTypes} value={opportunityFilters.opportunityType} onChange={(value) => updateOpportunityFilter('opportunityType', value)} />
+        <Select allowClear placeholder="Select type" style={{ width: 170 }} options={opportunityTypeOptions} value={opportunityFilters.opportunityType} onChange={(value) => updateOpportunityFilter('opportunityType', value)} />
       </FilterField>
       <FilterField label="Score Range">
         <Select
@@ -406,7 +486,7 @@ export default function HomePage() {
         />
       </FilterField>
       <FilterField label="Status">
-        <Select allowClear placeholder="Select status" style={{ width: 180 }} options={opportunityStatuses} value={opportunityFilters.status} onChange={(value) => updateOpportunityFilter('status', value)} />
+        <Select allowClear placeholder="Select status" style={{ width: 180 }} options={opportunityStatusOptions} value={opportunityFilters.status} onChange={(value) => updateOpportunityFilter('status', value)} />
       </FilterField>
       <Button onClick={clearActiveFilters}>Clear</Button>
     </Space>
@@ -418,16 +498,16 @@ export default function HomePage() {
         <Input allowClear placeholder="Name / desc / city" style={{ width: 180 }} value={companyFilters.q} onChange={(event) => updateCompanyFilter('q', event.target.value || undefined)} />
       </FilterField>
       <FilterField label="Industry">
-        <Select allowClear placeholder="Select industry" style={{ width: 150 }} options={industries} value={companyFilters.industry} onChange={(value) => updateCompanyFilter('industry', value)} />
+        <Select allowClear placeholder="Select industry" style={{ width: 150 }} options={companyIndustryOptions} value={companyFilters.industry} onChange={(value) => updateCompanyFilter('industry', value)} />
       </FilterField>
       <FilterField label="Company Type">
-        <Select allowClear placeholder="Select type" style={{ width: 170 }} options={companyTypes} value={companyFilters.companyType} onChange={(value) => updateCompanyFilter('companyType', value)} />
+        <Select allowClear placeholder="Select type" style={{ width: 170 }} options={companyTypeOptions} value={companyFilters.companyType} onChange={(value) => updateCompanyFilter('companyType', value)} />
       </FilterField>
       <FilterField label="Province">
-        <Input allowClear placeholder="Province" style={{ width: 130 }} value={companyFilters.province} onChange={(event) => updateCompanyFilter('province', event.target.value || undefined)} />
+        <Select allowClear showSearch placeholder="Province" style={{ width: 130 }} options={companyProvinceOptions} value={companyFilters.province} onChange={(value) => updateCompanyFilter('province', value)} />
       </FilterField>
       <FilterField label="City">
-        <Input allowClear placeholder="City" style={{ width: 120 }} value={companyFilters.city} onChange={(event) => updateCompanyFilter('city', event.target.value || undefined)} />
+        <Select allowClear showSearch placeholder="City" style={{ width: 120 }} options={companyCityOptions} value={companyFilters.city} onChange={(value) => updateCompanyFilter('city', value)} />
       </FilterField>
       <FilterField label="Confidence Range">
         <Select
@@ -443,7 +523,7 @@ export default function HomePage() {
         />
       </FilterField>
       <FilterField label="Status">
-        <Select allowClear placeholder="Select status" style={{ width: 140 }} options={entityStatuses} value={companyFilters.status} onChange={(value) => updateCompanyFilter('status', value)} />
+        <Select allowClear placeholder="Select status" style={{ width: 140 }} options={companyStatusOptions} value={companyFilters.status} onChange={(value) => updateCompanyFilter('status', value)} />
       </FilterField>
       <Button onClick={clearActiveFilters}>Clear</Button>
     </Space>
@@ -455,13 +535,13 @@ export default function HomePage() {
         <Input allowClear placeholder="Name / model / desc" style={{ width: 180 }} value={productFilters.q} onChange={(event) => updateProductFilter('q', event.target.value || undefined)} />
       </FilterField>
       <FilterField label="Industry">
-        <Select allowClear placeholder="Select industry" style={{ width: 150 }} options={industries} value={productFilters.industry} onChange={(value) => updateProductFilter('industry', value)} />
+        <Select allowClear placeholder="Select industry" style={{ width: 150 }} options={productIndustryOptions} value={productFilters.industry} onChange={(value) => updateProductFilter('industry', value)} />
       </FilterField>
       <FilterField label="Category">
-        <Select allowClear showSearch placeholder="Select category" style={{ width: 210 }} options={productCategories} value={productFilters.category} onChange={(value) => updateProductFilter('category', value)} />
+        <Select allowClear showSearch placeholder="Select category" style={{ width: 210 }} options={productCategoryOptions} value={productFilters.category} onChange={(value) => updateProductFilter('category', value)} />
       </FilterField>
       <FilterField label="Manufacturer">
-        <Input allowClear placeholder="Manufacturer" style={{ width: 180 }} value={productFilters.manufacturerName} onChange={(event) => updateProductFilter('manufacturerName', event.target.value || undefined)} />
+        <Select allowClear showSearch placeholder="Manufacturer" style={{ width: 180 }} options={productManufacturerOptions} value={productFilters.manufacturerName} onChange={(value) => updateProductFilter('manufacturerName', value)} />
       </FilterField>
       <FilterField label="Confidence Range">
         <Select
@@ -477,7 +557,7 @@ export default function HomePage() {
         />
       </FilterField>
       <FilterField label="Status">
-        <Select allowClear placeholder="Select status" style={{ width: 140 }} options={entityStatuses} value={productFilters.status} onChange={(value) => updateProductFilter('status', value)} />
+        <Select allowClear placeholder="Select status" style={{ width: 140 }} options={productStatusOptions} value={productFilters.status} onChange={(value) => updateProductFilter('status', value)} />
       </FilterField>
       <Button onClick={clearActiveFilters}>Clear</Button>
     </Space>
@@ -486,16 +566,16 @@ export default function HomePage() {
   const relationshipFilterPanel = (
     <Space wrap align="end" size={[12, 12]}>
       <FilterField label="Entity Type">
-        <Select allowClear placeholder="Either endpoint" style={{ width: 150 }} options={entityTypes} value={relationshipFilters.entityType} onChange={(value) => updateRelationshipFilter('entityType', value)} />
+        <Select allowClear placeholder="Either endpoint" style={{ width: 150 }} options={mergeOptions(relationshipEntityTypeOptions, relationshipFilters.entityType)} value={relationshipFilters.entityType} onChange={(value) => updateRelationshipFilter('entityType', value)} />
       </FilterField>
       <FilterField label="Source Type">
-        <Select allowClear placeholder="Source" style={{ width: 140 }} options={entityTypes} value={relationshipFilters.sourceType} onChange={(value) => updateRelationshipFilter('sourceType', value)} />
+        <Select allowClear placeholder="Source" style={{ width: 140 }} options={relationshipSourceTypeOptions} value={relationshipFilters.sourceType} onChange={(value) => updateRelationshipFilter('sourceType', value)} />
       </FilterField>
       <FilterField label="Target Type">
-        <Select allowClear placeholder="Target" style={{ width: 140 }} options={entityTypes} value={relationshipFilters.targetType} onChange={(value) => updateRelationshipFilter('targetType', value)} />
+        <Select allowClear placeholder="Target" style={{ width: 140 }} options={relationshipTargetTypeOptions} value={relationshipFilters.targetType} onChange={(value) => updateRelationshipFilter('targetType', value)} />
       </FilterField>
       <FilterField label="Relation Type">
-        <Select allowClear showSearch placeholder="Select relation" style={{ width: 170 }} options={relationTypes} value={relationshipFilters.relationType} onChange={(value) => updateRelationshipFilter('relationType', value)} />
+        <Select allowClear showSearch placeholder="Select relation" style={{ width: 170 }} options={relationshipTypeOptions} value={relationshipFilters.relationType} onChange={(value) => updateRelationshipFilter('relationType', value)} />
       </FilterField>
       <FilterField label="Confidence Range">
         <Select
@@ -586,8 +666,9 @@ export default function HomePage() {
 
           <Col span={24}>
             <Tabs
-              activeKey={activeTab}
+              defaultActiveKey="opportunities"
               onChange={(key) => setActiveTab(key as ActiveTab)}
+              onTabClick={(key) => setActiveTab(key as ActiveTab)}
               items={[
                 {
                   key: 'opportunities',
